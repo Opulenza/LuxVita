@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
-    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'"><meta name="referrer" content="no-referrer">
     <title>LuxVita - Lüks Yaşam, Konforlu Evler!</title>
     <style>
         body {
@@ -69,6 +68,7 @@
             text-decoration: none;
             font-size: 18px;
             font-weight: bold;
+            cursor: pointer;
         }
         section {
             padding: 20px;
@@ -82,6 +82,32 @@
         function toggleLoginPanel() {
             let panel = document.getElementById("loginPanel");
             panel.style.display = panel.style.display === "block" ? "none" : "block";
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll("section").forEach(section => {
+                section.classList.remove("active");
+            });
+            document.getElementById(sectionId).classList.add("active");
+        }
+
+        function checkLogin() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            if (username === "admin" && password === "1234") {
+                alert("Giriş başarılı!");
+                document.getElementById("loginPanel").style.display = "none";
+                document.getElementById("logoutBtn").style.display = "block";
+                document.querySelector(".admin-section").style.display = "block";
+            } else {
+                alert("Hatalı giriş!");
+            }
+        }
+
+        function logout() {
+            alert("Çıkış yapıldı.");
+            document.getElementById("logoutBtn").style.display = "none";
+            document.querySelector(".admin-section").style.display = "none";
         }
     </script>
 </head>
@@ -99,10 +125,10 @@
     </header>
     
     <nav>
-        <a href="#anasayfa" onclick="showSection('anasayfa')">Ana Sayfa</a>
-        <a href="#ilanlar" onclick="showSection('ilanlar')">İlanlar</a>
-        <a href="#hakkimizda" onclick="showSection('hakkimizda')">Hakkımızda</a>
-        <a href="#iletisim" onclick="showSection('iletisim')">İletişim</a>
+        <a onclick="showSection('anasayfa')">Ana Sayfa</a>
+        <a onclick="showSection('ilanlar')">İlanlar</a>
+        <a onclick="showSection('hakkimizda')">Hakkımızda</a>
+        <a onclick="showSection('iletisim')">İletişim</a>
     </nav>
     
     <section id="anasayfa" class="active">
@@ -122,6 +148,20 @@
                 </form>
                 <div id="uploadedImage"></div>
             </div>
+        </div>
+    </section>
+    
+    <section id="hakkimizda">
+        <div class="container">
+            <h2>Hakkımızda</h2>
+            <p>Biz LuxVita olarak lüks ve konforlu yaşam sunuyoruz.</p>
+        </div>
+    </section>
+    
+    <section id="iletisim">
+        <div class="container">
+            <h2>İletişim</h2>
+            <p>Bize ulaşmak için info@luxvita.com adresinden e-posta gönderebilirsiniz.</p>
         </div>
     </section>
 </body>
