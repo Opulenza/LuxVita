@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
-    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'"><meta name="referrer" content="no-referrer">
     <title>LuxVita - Lüks Yaşam, Konforlu Evler!</title>
     <style>
         body {
@@ -74,6 +73,14 @@
         section.active {
             display: block;
         }
+        #loginForm {
+            text-align: center;
+            margin-top: 50px;
+        }
+        #loginForm input {
+            padding: 10px;
+            margin: 5px;
+        }
     </style>
     <script>
         function showSection(sectionId) {
@@ -92,67 +99,95 @@
                 showSection('anasayfa');
             }
         };
+
+        function checkLogin() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            if (username === "admin" && password === "1234") {
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("siteContent").style.display = "block";
+            } else {
+                alert("Yanlış kullanıcı adı veya şifre!");
+            }
+        }
     </script>
 </head>
 <body>
-    <header>
-        <h1>LuxVita</h1>
-        <p>Lüks Yaşam, Konforlu Evler!</p>
-    </header>
-    
-    <nav>
-        <a href="#anasayfa" onclick="showSection('anasayfa')">Ana Sayfa</a>
-        <a href="#ilanlar" onclick="showSection('ilanlar')">İlanlar</a>
-        <a href="#hakkimizda" onclick="showSection('hakkimizda')">Hakkımızda</a>
-        <a href="#iletisim" onclick="showSection('iletisim')">İletişim</a>
-    </nav>
-    
-    <section id="anasayfa" class="active">
-        <div class="container">
-            <h2>Hoşgeldiniz!</h2>
-            <p>Lüks yaşamın adresi LuxVita'ya hoş geldiniz.</p>
-        </div>
-    </section>
-    
-    <section id="ilanlar">
-        <div class="container">
-            <h2>Satılık / Kiralık Evler</h2>
-            <div class="listing">
-                <div class="property">
-                    <img src="images/house1.jpg" alt="Ev 1">
-                    <h3>3+1 Daire - İstanbul</h3>
-                    <p>Fiyat: 3.500.000 TL</p>
-                </div>
-                <div class="property">
-                    <img src="images/apartment1.jpg" alt="Ev 2">
-                    <h3>2+1 Daire - Ankara</h3>
-                    <p>Fiyat: 2.000.000 TL</p>
-                </div>
-                <div class="property">
-                    <img src="images/villa1.jpg" alt="Ev 3">
-                    <h3>Villa - İzmir</h3>
-                    <p>Fiyat: 7.500.000 TL</p>
-                </div>
+    <div id="loginForm">
+        <h2>Giriş Yap</h2>
+        <input type="text" id="username" placeholder="Kullanıcı Adı">
+        <input type="password" id="password" placeholder="Şifre">
+        <button onclick="checkLogin()">Giriş Yap</button>
+    </div>
+
+    <div id="siteContent" style="display: none;">
+        <header>
+            <h1>LuxVita</h1>
+            <p>Lüks Yaşam, Konforlu Evler!</p>
+        </header>
+        
+        <nav>
+            <a href="#anasayfa" onclick="showSection('anasayfa')">Ana Sayfa</a>
+            <a href="#ilanlar" onclick="showSection('ilanlar')">İlanlar</a>
+            <a href="#hakkimizda" onclick="showSection('hakkimizda')">Hakkımızda</a>
+            <a href="#iletisim" onclick="showSection('iletisim')">İletişim</a>
+        </nav>
+        
+        <section id="anasayfa" class="active">
+            <div class="container">
+                <h2>Hoşgeldiniz!</h2>
+                <p>Lüks yaşamın adresi LuxVita'ya hoş geldiniz.</p>
             </div>
-        </div>
-    </section>
-    
-    <section id="hakkimizda">
-        <div class="container">
-            <h2>Hakkımızda</h2>
-            <p>LuxVita, lüks ve konforlu yaşam alanları sunan bir gayrimenkul platformudur.</p>
-        </div>
-    </section>
-    
-    <section id="iletisim">
-        <div class="container">
-            <h2>İletişim</h2>
-            <p>Bize ulaşmak için: info@luxvita.com</p>
-        </div>
-    </section>
-    
-    <footer>
-        <p>LuxVita - 2025 © Tüm Hakları Saklıdır</p>
-    </footer>
+        </section>
+        
+        <section id="ilanlar">
+            <div class="container">
+                <h2>Satılık / Kiralık Evler</h2>
+                <form id="uploadForm">
+                    <input type="file" id="imageFile" accept="image/*">
+                    <button type="submit">Yükle</button>
+                </form>
+                <div id="uploadedImage"></div>
+                <script>
+                    document.getElementById("uploadForm").addEventListener("submit", function(event) {
+                        event.preventDefault();
+                        let formData = new FormData();
+                        formData.append("image", document.getElementById("imageFile").files[0]);
+
+                        fetch("upload.php", {
+                            method: "POST",
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === "success") {
+                                document.getElementById("uploadedImage").innerHTML = `<img src="${data.url}" width="300px">`;
+                            } else {
+                                alert("Yükleme başarısız!");
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </section>
+        
+        <section id="hakkimizda">
+            <div class="container">
+                <h2>Hakkımızda</h2>
+                <p>LuxVita, lüks ve konforlu yaşam alanları sunan bir gayrimenkul platformudur.</p>
+            </div>
+        </section>
+        
+        <section id="iletisim">
+            <div class="container">
+                <h2>İletişim</h2>
+                <p>Bize ulaşmak için: info@luxvita.com</p>
+            </div>
+        </section>
+        
+        <footer>
+            <p>LuxVita - 2025 © Tüm Hakları Saklıdır</p>
+        </footer>
+    </div>
 </body>
 </html>
