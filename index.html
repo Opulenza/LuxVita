@@ -95,6 +95,31 @@
             document.getElementById(sectionId).classList.add("active");
         }
 
+        // Kullanıcı girişi kontrolü
+        function checkLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Örnek olarak sabit bir kullanıcı adı ve şifre kontrolü
+            if (username === "admin" && password === "1234") {
+                alert("Giriş Başarılı!");
+                // Giriş başarılı olduğunda, giriş butonunu gizle ve çıkış butonunu göster
+                document.getElementById("loginPanel").style.display = "none";
+                document.getElementById("logoutBtn").style.display = "inline-block";
+                // Ana sayfaya gitmek için sayfa geçişini başlat
+                showSection("anasayfa");
+            } else {
+                alert("Kullanıcı adı veya şifre hatalı!");
+            }
+        }
+
+        // Çıkış işlemi
+        function logout() {
+            alert("Çıkış Yapıldı!");
+            document.getElementById("logoutBtn").style.display = "none";
+            showSection("anasayfa"); // Çıkış yapıldığında ana sayfayı göster
+        }
+
         // Sayfa tamamen yüklendiğinde, tıklanabilir menüler için etkinleştirme
         document.addEventListener("DOMContentLoaded", function() {
             console.log("Sayfa tamamen yüklendi.");
