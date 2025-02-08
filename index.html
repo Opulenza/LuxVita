@@ -81,11 +81,13 @@
         }
     </style>
     <script>
+        // Kullanıcı giriş paneli açma/kapama fonksiyonu
         function toggleLoginPanel() {
             let panel = document.getElementById("loginPanel");
             panel.style.display = panel.style.display === "block" ? "none" : "block";
         }
 
+        // Sekme geçişi için fonksiyon
         function showSection(sectionId) {
             document.querySelectorAll("section").forEach(section => {
                 section.classList.remove("active");
@@ -93,14 +95,21 @@
             document.getElementById(sectionId).classList.add("active");
         }
 
+        // Sayfa tamamen yüklendiğinde, tıklanabilir menüler için etkinleştirme
         document.addEventListener("DOMContentLoaded", function() {
+            console.log("Sayfa tamamen yüklendi.");
+
+            // Nav menüsündeki her bir link için tıklanabilir işlev ekliyoruz
             document.querySelectorAll("nav a").forEach(link => {
                 link.addEventListener("click", function(event) {
                     event.preventDefault();
-                    let targetId = this.getAttribute("href").substring(1);
+                    let targetId = this.getAttribute("href").substring(1); // '#' işaretini kaldırıyoruz
                     showSection(targetId);
                 });
             });
+
+            // İlk yüklemede ana sayfa aktif olacak
+            showSection('anasayfa');
         });
     </script>
 </head>
