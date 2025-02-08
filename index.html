@@ -49,6 +49,7 @@
             font-size: 18px;
             font-weight: bold;
             transition: color 0.3s ease;
+            cursor: pointer;
         }
 
         nav a:hover {
@@ -65,6 +66,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             text-align: center;
+            display: none;
         }
 
         .hero-image {
@@ -74,6 +76,10 @@
             margin: 20px auto;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .active {
+            display: block;
         }
     </style>
 </head>
@@ -86,14 +92,38 @@
 
     <!-- Navigasyon -->
     <nav>
-        <a href="index.html">Ana Sayfa</a>
-        <a href="hakkimizda.html">Hakkımızda</a>
-        <a href="iletisim.html">İletişim</a>
+        <a onclick="showSection('anasayfa')">Ana Sayfa</a>
+        <a onclick="showSection('hakkimizda')">Hakkımızda</a>
+        <a onclick="showSection('iletisim')">İletişim</a>
     </nav>
 
     <!-- Ana Sayfa -->
     <section id="anasayfa" class="container active">
         <img src="https://raw.githubusercontent.com/Opulenza/LuxVita/main/dd.jpg" alt="Ana Sayfa Resmi" class="hero-image">
     </section>
+
+    <!-- Hakkımızda -->
+    <section id="hakkimizda" class="container">
+        <h2>Hakkımızda</h2>
+        <p>Elit yaşamın ve premium deneyimin adresi: <strong>LuxVita.</strong><br>
+        Yıllardır bu sektördeyiz ve en üst düzey hizmeti sunmayı kendimize ilke edindik.<br>
+        Kalitenin, konforun ve prestijin birleşim noktası olan LuxVita, sizlere ayrıcalıklı bir dünyanın kapılarını aralıyor.</p>
+    </section>
+
+    <!-- İletişim -->
+    <section id="iletisim" class="container">
+        <h2>İletişim</h2>
+        <p>Bize ulaşmak için aşağıdaki e-posta adresini kullanabilirsiniz:</p>
+        <p><strong>Email:</strong> info@luxvita.com</p>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.container').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
