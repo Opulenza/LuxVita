@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'"><meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+    <meta name="referrer" content="no-referrer">
     <title>LuxVita - Lüks Yaşam, Konforlu Evler!</title>
     <style>
         body {
@@ -91,24 +92,13 @@
             document.getElementById(sectionId).classList.add("active");
         }
 
-        function checkLogin() {
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-            if (username === "admin" && password === "1234") {
-                alert("Giriş başarılı!");
-                document.getElementById("loginPanel").style.display = "none";
-                document.getElementById("logoutBtn").style.display = "block";
-                document.querySelector(".admin-section").style.display = "block";
-            } else {
-                alert("Hatalı giriş!");
-            }
-        }
-
-        function logout() {
-            alert("Çıkış yapıldı.");
-            document.getElementById("logoutBtn").style.display = "none";
-            document.querySelector(".admin-section").style.display = "none";
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("nav a").forEach(link => {
+                link.addEventListener("click", function() {
+                    showSection(this.getAttribute("onclick").split("'")[1]);
+                });
+            });
+        });
     </script>
 </head>
 <body>
@@ -125,10 +115,10 @@
     </header>
     
     <nav>
-        <a onclick="showSection('anasayfa')">Ana Sayfa</a>
-        <a onclick="showSection('ilanlar')">İlanlar</a>
-        <a onclick="showSection('hakkimizda')">Hakkımızda</a>
-        <a onclick="showSection('iletisim')">İletişim</a>
+        <a href="#" onclick="showSection('anasayfa')">Ana Sayfa</a>
+        <a href="#" onclick="showSection('ilanlar')">İlanlar</a>
+        <a href="#" onclick="showSection('hakkimizda')">Hakkımızda</a>
+        <a href="#" onclick="showSection('iletisim')">İletişim</a>
     </nav>
     
     <section id="anasayfa" class="active">
@@ -141,13 +131,6 @@
     <section id="ilanlar">
         <div class="container">
             <h2>Satılık / Kiralık Evler</h2>
-            <div class="admin-section" style="display:none;">
-                <form id="uploadForm">
-                    <input type="file" id="imageFile" accept="image/*">
-                    <button type="submit">Yükle</button>
-                </form>
-                <div id="uploadedImage"></div>
-            </div>
         </div>
     </section>
     
