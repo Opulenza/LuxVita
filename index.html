@@ -49,7 +49,6 @@
             font-size: 18px;
             font-weight: bold;
             transition: color 0.3s ease;
-            cursor: pointer;
         }
 
         nav a:hover {
@@ -66,7 +65,11 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             text-align: center;
-            display: none;
+            display: none; /* Tüm içerikler başlangıçta gizli */
+        }
+
+        .container.active {
+            display: block; /* Aktif olan içerik gösterilir */
         }
 
         .hero-image {
@@ -78,10 +81,43 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .active {
-            display: block;
+        /* Footer */
+        footer {
+            background: #1e3a5f;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
         }
     </style>
+    <script>
+        // Sayfa yüklendiğinde çalışacak fonksiyon
+        document.addEventListener("DOMContentLoaded", function () {
+            // Başlangıçta ana sayfayı göster
+            showSection('anasayfa');
+
+            // Navigasyon bağlantılarına tıklama olayı ekle
+            const navLinks = document.querySelectorAll("nav a");
+            navLinks.forEach(function (link) {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault(); // Sayfa yenilemesini engelle
+                    const targetId = this.getAttribute("href").substring(1); // '#' işaretini kaldır
+                    showSection(targetId);
+                });
+            });
+        });
+
+        // Belirli bir bölümü gösteren fonksiyon
+        function showSection(sectionId) {
+            // Tüm bölümleri gizle
+            document.querySelectorAll(".container").forEach(function (section) {
+                section.classList.remove("active");
+            });
+
+            // Hedef bölümü göster
+            document.getElementById(sectionId).classList.add("active");
+        }
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -92,9 +128,9 @@
 
     <!-- Navigasyon -->
     <nav>
-        <a onclick="showSection('anasayfa')">Ana Sayfa</a>
-        <a onclick="showSection('hakkimizda')">Hakkımızda</a>
-        <a onclick="showSection('iletisim')">İletişim</a>
+        <a href="#anasayfa">Ana Sayfa</a>
+        <a href="#hakkimizda">Hakkımızda</a>
+        <a href="#iletisim">İletişim</a>
     </nav>
 
     <!-- Ana Sayfa -->
@@ -102,7 +138,7 @@
         <img src="https://raw.githubusercontent.com/Opulenza/LuxVita/main/dd.jpg" alt="Ana Sayfa Resmi" class="hero-image">
     </section>
 
-    <!-- Hakkımızda -->
+    <!-- Hakkımızda Sayfası -->
     <section id="hakkimizda" class="container">
         <h2>Hakkımızda</h2>
         <p>Elit yaşamın ve premium deneyimin adresi: <strong>LuxVita.</strong><br>
@@ -110,20 +146,16 @@
         Kalitenin, konforun ve prestijin birleşim noktası olan LuxVita, sizlere ayrıcalıklı bir dünyanın kapılarını aralıyor.</p>
     </section>
 
-    <!-- İletişim -->
+    <!-- İletişim Sayfası -->
     <section id="iletisim" class="container">
         <h2>İletişim</h2>
         <p>Bize ulaşmak için aşağıdaki e-posta adresini kullanabilirsiniz:</p>
         <p><strong>Email:</strong> info@luxvita.com</p>
     </section>
 
-    <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('.container').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-        }
-    </script>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 LuxVita. Tüm hakları saklıdır.</p>
+    </footer>
 </body>
 </html>
