@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'"><meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+    <meta name="referrer" content="no-referrer">
     <title>LuxVita - Lüks Yaşam, Konforlu Evler!</title>
     <style>
         body {
@@ -19,6 +20,16 @@
             text-align: center;
             font-size: 24px;
             font-weight: bold;
+            position: relative;
+        }
+        .login-container {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        .login-container input {
+            padding: 5px;
+            margin: 2px;
         }
         .container {
             width: 80%;
@@ -73,16 +84,13 @@
         section.active {
             display: block;
         }
-        #loginForm {
-            text-align: center;
-            margin-top: 50px;
-        }
-        #loginForm input {
-            padding: 10px;
-            margin: 5px;
+        #ilanlar .admin-section {
+            display: none;
         }
     </style>
     <script>
+        let isAdmin = false;
+        
         function showSection(sectionId) {
             document.querySelectorAll('section').forEach(section => {
                 section.classList.remove('active');
@@ -104,45 +112,52 @@
             let username = document.getElementById("username").value;
             let password = document.getElementById("password").value;
             if (username === "admin" && password === "1234") {
+                isAdmin = true;
                 document.getElementById("loginForm").style.display = "none";
-                document.getElementById("siteContent").style.display = "block";
+                document.getElementById("logoutBtn").style.display = "inline-block";
+                document.querySelector("#ilanlar .admin-section").style.display = "block";
             } else {
                 alert("Yanlış kullanıcı adı veya şifre!");
             }
         }
+
+        function logout() {
+            isAdmin = false;
+            document.getElementById("logoutBtn").style.display = "none";
+            document.querySelector("#ilanlar .admin-section").style.display = "none";
+        }
     </script>
 </head>
 <body>
-    <div id="loginForm">
-        <h2>Giriş Yap</h2>
-        <input type="text" id="username" placeholder="Kullanıcı Adı">
-        <input type="password" id="password" placeholder="Şifre">
-        <button onclick="checkLogin()">Giriş Yap</button>
-    </div>
-
-    <div id="siteContent" style="display: none;">
-        <header>
-            <h1>LuxVita</h1>
-            <p>Lüks Yaşam, Konforlu Evler!</p>
-        </header>
-        
-        <nav>
-            <a href="#anasayfa" onclick="showSection('anasayfa')">Ana Sayfa</a>
-            <a href="#ilanlar" onclick="showSection('ilanlar')">İlanlar</a>
-            <a href="#hakkimizda" onclick="showSection('hakkimizda')">Hakkımızda</a>
-            <a href="#iletisim" onclick="showSection('iletisim')">İletişim</a>
-        </nav>
-        
-        <section id="anasayfa" class="active">
-            <div class="container">
-                <h2>Hoşgeldiniz!</h2>
-                <p>Lüks yaşamın adresi LuxVita'ya hoş geldiniz.</p>
-            </div>
-        </section>
-        
-        <section id="ilanlar">
-            <div class="container">
-                <h2>Satılık / Kiralık Evler</h2>
+    <header>
+        <h1>LuxVita</h1>
+        <p>Lüks Yaşam, Konforlu Evler!</p>
+        <div class="login-container">
+            <input type="text" id="username" placeholder="Kullanıcı Adı">
+            <input type="password" id="password" placeholder="Şifre">
+            <button onclick="checkLogin()">Giriş Yap</button>
+            <button id="logoutBtn" onclick="logout()" style="display:none;">Çıkış Yap</button>
+        </div>
+    </header>
+    
+    <nav>
+        <a href="#anasayfa" onclick="showSection('anasayfa')">Ana Sayfa</a>
+        <a href="#ilanlar" onclick="showSection('ilanlar')">İlanlar</a>
+        <a href="#hakkimizda" onclick="showSection('hakkimizda')">Hakkımızda</a>
+        <a href="#iletisim" onclick="showSection('iletisim')">İletişim</a>
+    </nav>
+    
+    <section id="anasayfa" class="active">
+        <div class="container">
+            <h2>Hoşgeldiniz!</h2>
+            <p>Lüks yaşamın adresi LuxVita'ya hoş geldiniz.</p>
+        </div>
+    </section>
+    
+    <section id="ilanlar">
+        <div class="container">
+            <h2>Satılık / Kiralık Evler</h2>
+            <div class="admin-section">
                 <form id="uploadForm">
                     <input type="file" id="imageFile" accept="image/*">
                     <button type="submit">Yükle</button>
@@ -151,9 +166,12 @@
                 <script>
                     document.getElementById("uploadForm").addEventListener("submit", function(event) {
                         event.preventDefault();
+                        if (!isAdmin) {
+                            alert("Önce giriş yapmalısınız!");
+                            return;
+                        }
                         let formData = new FormData();
                         formData.append("image", document.getElementById("imageFile").files[0]);
-
                         fetch("upload.php", {
                             method: "POST",
                             body: formData
@@ -169,25 +187,7 @@
                     });
                 </script>
             </div>
-        </section>
-        
-        <section id="hakkimizda">
-            <div class="container">
-                <h2>Hakkımızda</h2>
-                <p>LuxVita, lüks ve konforlu yaşam alanları sunan bir gayrimenkul platformudur.</p>
-            </div>
-        </section>
-        
-        <section id="iletisim">
-            <div class="container">
-                <h2>İletişim</h2>
-                <p>Bize ulaşmak için: info@luxvita.com</p>
-            </div>
-        </section>
-        
-        <footer>
-            <p>LuxVita - 2025 © Tüm Hakları Saklıdır</p>
-        </footer>
-    </div>
+        </div>
+    </section>
 </body>
 </html>
