@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxVita - Lüks Yaşam, Konforlu Evler!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #2a4365;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        .listing {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .property {
+            border: 1px solid #ddd;
+            padding: 15px;
+            width: 30%;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .property:hover {
+            transform: scale(1.05);
+        }
+        .property img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        footer {
+            text-align: center;
+            background: #1e3a5f;
+            color: white;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        nav {
+            background: #243c5a;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>LuxVita</h1>
+        <p>Lüks Yaşam, Konforlu Evler!</p>
+    </header>
+    
+    <nav>
+        <a href="#">Ana Sayfa</a>
+        <a href="#">İlanlar</a>
+        <a href="#">Hakkımızda</a>
+        <a href="#">İletişim</a>
+    </nav>
+    
+    <div class="container">
+        <h2>Satılık / Kiralık Evler</h2>
+        <div class="listing">
+            <div class="property">
+                <img src="https://via.placeholder.com/300x200" alt="Ev 1">
+                <h3>3+1 Daire - İstanbul</h3>
+                <p>Fiyat: 3.500.000 TL</p>
+            </div>
+            <div class="property">
+                <img src="https://via.placeholder.com/300x200" alt="Ev 2">
+                <h3>2+1 Daire - Ankara</h3>
+                <p>Fiyat: 2.000.000 TL</p>
+            </div>
+            <div class="property">
+                <img src="https://via.placeholder.com/300x200" alt="Ev 3">
+                <h3>Villa - İzmir</h3>
+                <p>Fiyat: 7.500.000 TL</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>LuxVita - 2025 © Tüm Hakları Saklıdır</p>
+    </footer>
+</body>
+</html>
