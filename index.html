@@ -22,37 +22,30 @@
             font-weight: bold;
             position: relative;
         }
-        .login-container {
+        .login-button {
             position: absolute;
             top: 10px;
             right: 20px;
+            background: #1e3a5f;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
         }
-        .login-container input {
-            padding: 5px;
-            margin: 2px;
+        .login-panel {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         }
         .container {
             width: 80%;
             margin: auto;
             padding: 20px;
-        }
-        .listing {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .property {
-            border: 1px solid #ddd;
-            padding: 15px;
-            width: 30%;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-        .property:hover {
-            transform: scale(1.05);
         }
         .property img {
             width: 100%;
@@ -84,47 +77,11 @@
         section.active {
             display: block;
         }
-        #ilanlar .admin-section {
-            display: none;
-        }
     </style>
     <script>
-        let isAdmin = false;
-        
-        function showSection(sectionId) {
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-            history.pushState(null, null, '#' + sectionId);
-        }
-
-        window.onload = function() {
-            let sectionId = window.location.hash.substring(1);
-            if (sectionId && document.getElementById(sectionId)) {
-                showSection(sectionId);
-            } else {
-                showSection('anasayfa');
-            }
-        };
-
-        function checkLogin() {
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-            if (username === "admin" && password === "1234") {
-                isAdmin = true;
-                document.getElementById("loginForm").style.display = "none";
-                document.getElementById("logoutBtn").style.display = "inline-block";
-                document.querySelector("#ilanlar .admin-section").style.display = "block";
-            } else {
-                alert("Yanlış kullanıcı adı veya şifre!");
-            }
-        }
-
-        function logout() {
-            isAdmin = false;
-            document.getElementById("logoutBtn").style.display = "none";
-            document.querySelector("#ilanlar .admin-section").style.display = "none";
+        function toggleLoginPanel() {
+            let panel = document.getElementById("loginPanel");
+            panel.style.display = panel.style.display === "block" ? "none" : "block";
         }
     </script>
 </head>
@@ -132,7 +89,8 @@
     <header>
         <h1>LuxVita</h1>
         <p>Lüks Yaşam, Konforlu Evler!</p>
-        <div class="login-container">
+        <button class="login-button" onclick="toggleLoginPanel()">Giriş</button>
+        <div id="loginPanel" class="login-panel">
             <input type="text" id="username" placeholder="Kullanıcı Adı">
             <input type="password" id="password" placeholder="Şifre">
             <button onclick="checkLogin()">Giriş Yap</button>
@@ -157,35 +115,12 @@
     <section id="ilanlar">
         <div class="container">
             <h2>Satılık / Kiralık Evler</h2>
-            <div class="admin-section">
+            <div class="admin-section" style="display:none;">
                 <form id="uploadForm">
                     <input type="file" id="imageFile" accept="image/*">
                     <button type="submit">Yükle</button>
                 </form>
                 <div id="uploadedImage"></div>
-                <script>
-                    document.getElementById("uploadForm").addEventListener("submit", function(event) {
-                        event.preventDefault();
-                        if (!isAdmin) {
-                            alert("Önce giriş yapmalısınız!");
-                            return;
-                        }
-                        let formData = new FormData();
-                        formData.append("image", document.getElementById("imageFile").files[0]);
-                        fetch("upload.php", {
-                            method: "POST",
-                            body: formData
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === "success") {
-                                document.getElementById("uploadedImage").innerHTML = `<img src="${data.url}" width="300px">`;
-                            } else {
-                                alert("Yükleme başarısız!");
-                            }
-                        });
-                    });
-                </script>
             </div>
         </div>
     </section>
