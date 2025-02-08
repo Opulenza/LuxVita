@@ -20,28 +20,6 @@
             text-align: center;
             font-size: 24px;
             font-weight: bold;
-            position: relative;
-        }
-        .login-button {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            background: #1e3a5f;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-        .login-panel {
-            display: none;
-            position: fixed;
-            top: 50px;
-            right: 20px;
-            background: white;
-            border: 1px solid #ddd;
-            padding: 15px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
         }
         .container {
             width: 80%;
@@ -77,48 +55,20 @@
         }
     </style>
     <script>
-        // Kullanıcı giriş panelini açma/kapama fonksiyonu
-        function toggleLoginPanel() {
-            let panel = document.getElementById("loginPanel");
-            panel.style.display = panel.style.display === "block" ? "none" : "block";
-        }
-
         // Sekme geçişi için fonksiyon
         function showSection(sectionId) {
+            // Tüm sekmeleri gizle
             document.querySelectorAll("section").forEach(section => {
                 section.classList.remove("active");
             });
+            // Seçilen sekmeyi aktif et
             document.getElementById(sectionId).classList.add("active");
-        }
-
-        // Kullanıcı girişi kontrolü
-        function checkLogin() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            // Sabit kullanıcı adı ve şifre ile örnek giriş kontrolü
-            if (username === "admin" && password === "1234") {
-                alert("Giriş Başarılı!");
-                // Giriş başarılı olduğunda, giriş panelini gizle ve çıkış butonunu göster
-                document.getElementById("loginPanel").style.display = "none";
-                document.getElementById("logoutBtn").style.display = "inline-block";
-                // Ana sayfaya gitmek için sayfa geçişini başlat
-                showSection("anasayfa");
-            } else {
-                alert("Kullanıcı adı veya şifre hatalı!");
-            }
-        }
-
-        // Çıkış işlemi
-        function logout() {
-            alert("Çıkış Yapıldı!");
-            document.getElementById("logoutBtn").style.display = "none";
-            showSection("anasayfa"); // Çıkış yapıldığında ana sayfaya dön
         }
 
         // Sayfa tamamen yüklendiğinde, tıklanabilir menüler için etkinleştirme
         document.addEventListener("DOMContentLoaded", function() {
-            console.log("Sayfa tamamen yüklendi.");
+            // İlk yüklemede ana sayfa aktif olacak
+            showSection('anasayfa');
 
             // Nav menüsündeki her bir link için tıklanabilir işlev ekliyoruz
             document.querySelectorAll("nav a").forEach(link => {
@@ -128,9 +78,6 @@
                     showSection(targetId);
                 });
             });
-
-            // İlk yüklemede ana sayfa aktif olacak
-            showSection('anasayfa');
         });
     </script>
 </head>
@@ -138,13 +85,6 @@
     <header>
         <h1>LuxVita</h1>
         <p>Lüks Yaşam, Konforlu Evler!</p>
-        <button class="login-button" onclick="toggleLoginPanel()">Giriş</button>
-        <div id="loginPanel" class="login-panel">
-            <input type="text" id="username" placeholder="Kullanıcı Adı">
-            <input type="password" id="password" placeholder="Şifre">
-            <button onclick="checkLogin()">Giriş Yap</button>
-            <button id="logoutBtn" onclick="logout()" style="display:none;">Çıkış Yap</button>
-        </div>
     </header>
     
     <nav>
@@ -182,5 +122,9 @@
             <p>Telefon: +90 555 555 5555</p>
         </div>
     </section>
+
+    <footer>
+        <p>&copy; 2025 LuxVita. Tüm hakları saklıdır.</p>
+    </footer>
 </body>
 </html>
