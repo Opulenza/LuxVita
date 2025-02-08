@@ -81,7 +81,7 @@
         }
     </style>
     <script>
-        // Kullanıcı giriş paneli açma/kapama fonksiyonu
+        // Kullanıcı giriş panelini açma/kapama fonksiyonu
         function toggleLoginPanel() {
             let panel = document.getElementById("loginPanel");
             panel.style.display = panel.style.display === "block" ? "none" : "block";
@@ -100,10 +100,10 @@
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            // Örnek olarak sabit bir kullanıcı adı ve şifre kontrolü
+            // Sabit kullanıcı adı ve şifre ile örnek giriş kontrolü
             if (username === "admin" && password === "1234") {
                 alert("Giriş Başarılı!");
-                // Giriş başarılı olduğunda, giriş butonunu gizle ve çıkış butonunu göster
+                // Giriş başarılı olduğunda, giriş panelini gizle ve çıkış butonunu göster
                 document.getElementById("loginPanel").style.display = "none";
                 document.getElementById("logoutBtn").style.display = "inline-block";
                 // Ana sayfaya gitmek için sayfa geçişini başlat
@@ -117,7 +117,7 @@
         function logout() {
             alert("Çıkış Yapıldı!");
             document.getElementById("logoutBtn").style.display = "none";
-            showSection("anasayfa"); // Çıkış yapıldığında ana sayfayı göster
+            showSection("anasayfa"); // Çıkış yapıldığında ana sayfaya dön
         }
 
         // Sayfa tamamen yüklendiğinde, tıklanabilir menüler için etkinleştirme
