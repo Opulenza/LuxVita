@@ -79,7 +79,17 @@
                 section.classList.remove('active');
             });
             document.getElementById(sectionId).classList.add('active');
+            history.pushState(null, null, '#' + sectionId);
         }
+
+        window.onload = function() {
+            let sectionId = window.location.hash.substring(1);
+            if (sectionId && document.getElementById(sectionId)) {
+                showSection(sectionId);
+            } else {
+                showSection('anasayfa');
+            }
+        };
     </script>
 </head>
 <body>
@@ -89,10 +99,10 @@
     </header>
     
     <nav>
-        <a href="#" onclick="showSection('anasayfa')">Ana Sayfa</a>
-        <a href="#" onclick="showSection('ilanlar')">İlanlar</a>
-        <a href="#" onclick="showSection('hakkimizda')">Hakkımızda</a>
-        <a href="#" onclick="showSection('iletisim')">İletişim</a>
+        <a href="#anasayfa" onclick="showSection('anasayfa')">Ana Sayfa</a>
+        <a href="#ilanlar" onclick="showSection('ilanlar')">İlanlar</a>
+        <a href="#hakkimizda" onclick="showSection('hakkimizda')">Hakkımızda</a>
+        <a href="#iletisim" onclick="showSection('iletisim')">İletişim</a>
     </nav>
     
     <section id="anasayfa" class="active">
